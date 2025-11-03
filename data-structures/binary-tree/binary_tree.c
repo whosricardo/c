@@ -11,13 +11,14 @@ typedef struct root root;
 // modifies the tree (passed by ref)
 void addNewRoot(root **r, int key);
 void removeRoot(root **r, int key);
+root *findMaxLeft(root **r);
 
 // don't change the tree (passed by val)
 void printPreOrder(root *r);
 void printInOrder(root *r);
 void printPosOrder(root *r);
 root *searchRoot(root *r, int key);
-root *findMaxLeft(root **r);
+int twoSons(root *r);
 
 int main() {
     srand(time(NULL)); // seed with current time
@@ -87,6 +88,13 @@ void removeRoot(root **r, int key) {
             }
         }
     }
+}
+
+int twoSons(root *r) {
+    if (!r) return 1; // if root null returns 1
+    if ((r->left && !r->right) || (!r->left && r->right)) return 0; // can't have one son only
+        
+    return twoSons(r->left) && twoSons(r->right); // returns 1 if two returns 1, else 0
 }
 
 // ---- functions passed by val ----
